@@ -2,18 +2,16 @@ import streamlit as st
 import os
 import google.generativeai as genai
 
-# Page Configuration
+# Setup Page Config
 st.set_page_config(
     page_title="Nyaya AI - Legal Intelligence",
     page_icon="⚖️",
     layout="wide"
 )
 
-# App Title & Subtitle
 st.title("⚖️ NYAYA AI: Indian Legal Intelligence Platform")
 st.caption("Powered by Gemini • Statute & Case Analysis (BNS, BNSS, BSA, IPC)")
 
-# Sidebar Selection
 domain = st.sidebar.selectbox(
     "Select Primary Legal Domain",
     [
@@ -25,14 +23,13 @@ domain = st.sidebar.selectbox(
     ]
 )
 
-# Two-Column Layout
 col1, col2 = st.columns([1, 1], gap="medium")
 
 with col1:
     st.subheader("📝 Case Description")
     user_query = st.text_area(
         "Describe your legal issue:",
-        placeholder="E.g., I ordered an OLED TV worth ₹75,000 from an online seller. It arrived broken...",
+        placeholder="E.g., I ordered a product worth ₹75,000 from an online seller. It arrived broken...",
         height=220
     )
     submit_btn = st.button("Generate Legal Analysis 🚀", type="primary", use_container_width=True)
@@ -62,8 +59,9 @@ with col2:
                             "3. Actionable Next Steps"
                         )
 
+                        # Using gemini-1.5-flash-latest prevents 404 endpoint mismatch
                         model = genai.GenerativeModel(
-                            model_name='gemini-1.5-flash',
+                            model_name='gemini-1.5-flash-latest',
                             system_instruction=system_prompt
                         )
 
