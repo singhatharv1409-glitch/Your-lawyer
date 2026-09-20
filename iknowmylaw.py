@@ -6,7 +6,7 @@ from google.genai import types
 
 # Page Setup
 st.set_page_config(
-    page_title="Nyaya AI - Legal Intelligence",
+    page_title="Atharv AI - Legal Intelligence",
     page_icon="⚖️",
     layout="wide"
 )
