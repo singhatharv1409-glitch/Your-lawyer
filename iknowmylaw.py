@@ -60,7 +60,7 @@ with col2:
                         )
 
                         response = client.models.generate_content(
-                            model='gemini-2.5-flash',
+                            model='gemini-3.6-flash',
                             contents=f"Domain: {domain}\nQuery: {user_query}",
                             config=types.GenerateContentConfig(
                                 system_instruction=system_prompt,
