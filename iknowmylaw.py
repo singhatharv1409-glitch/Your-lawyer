@@ -1,8 +1,9 @@
 import streamlit as st
 import os
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 
-# Setup Page Config
+# Page Setup
 st.set_page_config(
     page_title="Nyaya AI - Legal Intelligence",
     page_icon="⚖️",
@@ -12,6 +13,7 @@ st.set_page_config(
 st.title("⚖️ NYAYA AI: Indian Legal Intelligence Platform")
 st.caption("Powered by Gemini • Statute & Case Analysis (BNS, BNSS, BSA, IPC)")
 
+# Sidebar Navigation
 domain = st.sidebar.selectbox(
     "Select Primary Legal Domain",
     [
@@ -23,6 +25,7 @@ domain = st.sidebar.selectbox(
     ]
 )
 
+# Layout Columns
 col1, col2 = st.columns([1, 1], gap="medium")
 
 with col1:
@@ -48,7 +51,9 @@ with col2:
                 with st.spinner("Analyzing relevant statutes and procedural remedies..."):
                     try:
                         clean_key = str(raw_key).strip().strip('"').strip("'")
-                        genai.configure(api_key=clean_key)
+                        
+                        # New SDK Client
+                        client = genai.Client(api_key=clean_key)
                         
                         system_prompt = (
                             "You are an expert Indian Legal AI Assistant trained in Indian statutes "
@@ -59,14 +64,14 @@ with col2:
                             "3. Actionable Next Steps"
                         )
 
-                        # Using gemini-1.5-flash-latest prevents 404 endpoint mismatch
-                        model = genai.GenerativeModel(
-                            model_name='gemini-1.5-flash-latest',
-                            system_instruction=system_prompt
-                        )
-
-                        response = model.generate_content(
-                            f"Domain: {domain}\nQuery: {user_query}"
+                        # Using gemini-2.5-flash on the modern Client API
+                        response = client.models.generate_content(
+                            model='gemini-2.5-flash',
+                            contents=f"Domain: {domain}\nQuery: {user_query}",
+                            config=types.GenerateContentConfig(
+                                system_instruction=system_prompt,
+                                temperature=0.2
+                            )
                         )
                         
                         st.markdown(response.text)
