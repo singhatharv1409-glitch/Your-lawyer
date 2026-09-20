@@ -11,7 +11,7 @@ st.set_page_config(
     layout="wide"
 )
 
-st.title("⚖️ NYAYA AI: Indian Legal Intelligence Platform")
+st.title("⚖️ Atharv AI: Indian Legal Intelligence Platform")
 st.caption("Powered by Gemini • Statute & Case Analysis (BNS, BNSS, BSA, IPC)")
 
 # Sidebar Navigation
