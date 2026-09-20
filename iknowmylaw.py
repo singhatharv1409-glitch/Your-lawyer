@@ -52,7 +52,7 @@ with col2:
                     try:
                         clean_key = str(raw_key).strip().strip('"').strip("'")
                         
-                        # New SDK Client
+                        # Initialize modern Client
                         client = genai.Client(api_key=clean_key)
                         
                         system_prompt = (
@@ -64,13 +64,12 @@ with col2:
                             "3. Actionable Next Steps"
                         )
 
-                        # Using gemini-2.5-flash on the modern Client API
+                        # Updated model name to gemini-3.6-flash
                         response = client.models.generate_content(
-                            model='gemini-2.5-flash',
+                            model='gemini-3.6-flash',
                             contents=f"Domain: {domain}\nQuery: {user_query}",
                             config=types.GenerateContentConfig(
-                                system_instruction=system_prompt,
-                                temperature=0.2
+                                system_instruction=system_prompt
                             )
                         )
                         
